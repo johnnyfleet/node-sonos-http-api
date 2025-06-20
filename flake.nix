@@ -23,10 +23,13 @@
             yarn       # Or npm, depending on what the project uses
             #vscode     # Optional for launching with nix-installed code
             jq         # Often useful for debugging APIs
+            mitmproxy
+            python3
           ];
 
           shellHook = ''
             echo "🚀 Node Sonos HTTP API dev shell ready"
+            echo "mitmproxy is ready. Run 'mitmproxy' or 'mitmweb'."
 
             if ! command -v code &> /dev/null; then
               echo "⚠️  VSCode is not installed or not in PATH."
