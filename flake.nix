@@ -42,6 +42,10 @@
               echo "    You can install it with: nix-env -iA nixpkgs.vscode"
               echo "    Or use VSCodium (FOSS):   nix-env -iA nixpkgs.vscodium"
             fi
+
+            if [ ! -d node_modules ]; then
+              npm install
+            fi
           '';
         };
       });
