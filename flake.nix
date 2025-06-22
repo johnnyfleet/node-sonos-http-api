@@ -2,7 +2,7 @@
   description = "Dev env for node-sonos-http-api";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
   };
 
@@ -27,9 +27,15 @@
             python3
           ];
 
+           # Set proxy env vars directly
+          HTTP_PROXY = "http://localhost:8080";
+          HTTPS_PROXY = "http://localhost:8080";
+          NODE_LOG_LEVEL= "debug";
+
           shellHook = ''
             echo "🚀 Node Sonos HTTP API dev shell ready"
             echo "mitmproxy is ready. Run 'mitmproxy' or 'mitmweb'."
+            echo "🔧 Proxy set: $HTTP_PROXY"
 
             if ! command -v code &> /dev/null; then
               echo "⚠️  VSCode is not installed or not in PATH."
