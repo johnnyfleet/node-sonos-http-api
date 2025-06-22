@@ -31,11 +31,21 @@
           HTTP_PROXY = "http://localhost:8080";
           HTTPS_PROXY = "http://localhost:8080";
           NODE_LOG_LEVEL= "debug";
+          NODE_OPTIONS="--require global-agent/bootstrap";
+
 
           shellHook = ''
+            # Export extra ca certs in shell hook to resolve $HOME.
+            export NODE_EXTRA_CA_CERTS="$HOME/.mitmproxy/mitmproxy-ca-cert.pem"
             echo "🚀 Node Sonos HTTP API dev shell ready"
             echo "mitmproxy is ready. Run 'mitmproxy' or 'mitmweb'."
             echo "🔧 Proxy set: $HTTP_PROXY"
+
+            # generate the mitmproxy CA if you haven’t yet
+            if [ ! -f "$HOME/.mitmproxy/mitmproxy-ca-cert.pem" ]; then
+              echo "🔧 first run of mitmproxy – generating CA cert"
+              mitmproxy --quit
+            fi
 
             if ! command -v code &> /dev/null; then
               echo "⚠️  VSCode is not installed or not in PATH."
@@ -43,6 +53,7 @@
               echo "    Or use VSCodium (FOSS):   nix-env -iA nixpkgs.vscodium"
             fi
 
+            # Install dependencies
             if [ ! -d node_modules ]; then
               npm install
             fi
