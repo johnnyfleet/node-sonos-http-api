@@ -31,12 +31,15 @@
           HTTP_PROXY = "http://localhost:8080";
           HTTPS_PROXY = "http://localhost:8080";
           NODE_LOG_LEVEL= "debug";
-          NODE_OPTIONS="--require global-agent/bootstrap";
+          #NODE_OPTIONS="--require global-agent/bootstrap";
 
 
           shellHook = ''
             # Export extra ca certs in shell hook to resolve $HOME.
             export NODE_EXTRA_CA_CERTS="$HOME/.mitmproxy/mitmproxy-ca-cert.pem"
+            export NODE_OPTIONS="--require global-agent/bootstrap"
+
+
             echo "🚀 Node Sonos HTTP API dev shell ready"
             echo "mitmproxy is ready. Run 'mitmproxy' or 'mitmweb'."
             echo "🔧 Proxy set: $HTTP_PROXY"
